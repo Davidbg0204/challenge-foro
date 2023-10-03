@@ -1,0 +1,798 @@
+@use "./extras/mixinsfunc";
+@import "./extras/variables";
+@import "./extras/animaciones.scss";
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Josefin Sans", sans-serif;
+    overflow-x: hidden;
+}
+
+body {
+    background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+    min-height: 100vh;
+}
+
+.btn_principal {
+    padding: 12px 15px;
+    text-transform: uppercase;
+    border: solid 1px transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: $DARK_BLUE;
+    color: $WHITE;
+    font-size: 1.2rem;
+    transition: all 0.2s linear;
+
+    &:hover {
+        border: solid 1px $DARK_BLUE;
+        background-color: $GRAY;
+        color: $DARK_BLUE;
+    }
+}
+
+.titular {
+    text-align: center;
+    font-size: 3rem;
+    text-transform: uppercase;
+    margin: 1.5rem auto;
+    color: $DARK_BLUE;
+}
+
+.contenedor__form {
+    @include mixinsfunc.flexBox(center, 2rem);
+    background-color: $GRAY;
+    border: solid 1px $DARK_BLUE;
+    border-radius: 20px;
+    padding: 2rem 3rem;
+    flex-direction: column;
+
+    .formulario {
+        width: 80%;
+        @include mixinsfunc.flexBox(center, 1.5rem);
+        flex-direction: column;
+
+        .input__caja {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+
+            label {
+                color: $DARK_BLUE;
+                font-size: 1.3rem;
+            }
+
+            input {
+                width: 100%;
+                padding: 10px;
+                border: none;
+                outline: none;
+                background: transparent;
+                border-bottom: solid 3px $DARK_BLUE;
+                color: $DARK_BLUE;
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .mensaje {
+        text-align: center;
+        font-size: 14px;
+    }
+}
+
+.Pagina__Inicio {
+    @include mixinsfunc.flexBox(center, 0);
+
+    .lado__izquierdo {
+        flex: 1;
+        text-align: center;
+        padding: 1rem;
+
+        h1 {
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            color: $DARK_BLUE;
+        }
+
+        h2 {
+            text-transform: uppercase;
+            margin: 1rem auto;
+            font-size: 1.5rem;
+            color: $BLUE;
+        }
+
+        .caja_btn_nav {
+            margin-top: 1.5rem;
+            @include mixinsfunc.flexBox(center, 1.5rem);
+            height: 100px;
+
+            a {
+                overflow: visible;
+            }
+
+            .btn_principal {
+                &:hover {
+                    transform: translateY(-5px);
+                }
+            }
+        }
+    }
+
+    .lado__derecho {
+        flex: 1;
+        min-height: 100vh;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: 0;
+        column-gap: 0;
+
+        @for $i from 1 through 4 {
+            .pic_#{$i} {
+                overflow: hidden;
+                animation: cambioFondo 10s linear infinite;
+
+                &:hover img {
+                    opacity: 0.8;
+                    transform: scale(1.1);
+                }
+
+                img {
+                    @include mixinsfunc.img();
+                    transition: all 0.3s linear;
+                }
+
+                @if $i % 2 == 0 {
+                    animation-direction: reverse;
+                }
+            }
+        }
+    }
+}
+
+.Login,
+.SignUp {
+    position: relative;
+    min-height: 100vh;
+    @include mixinsfunc.flexBox(center, 0);
+
+    img {
+        position: absolute;
+        width: 400px;
+
+        &:nth-child(1) {
+            left: 5px;
+            animation: apareciendoIzq 1s ease-in-out;
+        }
+
+        &:nth-child(2) {
+            right: 5px;
+            animation: apareciendoDer 1s ease-in-out;
+        }
+    }
+}
+
+.header {
+    @include mixinsfunc.flexBox(space-between, 0);
+    padding: 1rem 2rem;
+    background-color: $DARK_BLUE;
+    overflow: visible;
+
+    .logo {
+        width: 15%;
+        height: 15%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        picture {
+            width: 50%;
+            height: 100%;
+
+            img {
+                @include mixinsfunc.img();
+            }
+        }
+
+        span {
+            text-transform: uppercase;
+            color: $WHITE;
+        }
+    }
+
+    .usuario {
+        width: auto;
+        height: auto;
+        position: relative;
+        overflow: visible;
+
+        .img {
+            max-width: 120px;
+            max-height: 120px;
+            overflow: hidden;
+            background-color: $BLUE;
+            border: solid 2px $GRAY_BLUE;
+            border-radius: 50%;
+            cursor: pointer;
+
+            img {
+                @include mixinsfunc.img();
+            }
+        }
+
+        .drop_down_menu {
+            opacity: 0;
+            transform: translateY(-10px);
+            position: absolute;
+            max-width: 200px;
+            height: auto;
+            padding: 1rem 2rem;
+            right: 2px;
+            bottom: -90px;
+            background-color: $GRAY_BLUE;
+            border-radius: 20px;
+            transition: all 0.2s linear;
+            z-index: -100;
+
+            &.active {
+                opacity: 1;
+                transform: translateY(0);
+                z-index: 100;
+            }
+
+            button {
+                border: solid 1px transparent;
+                width: 100%;
+                cursor: pointer;
+                background-color: transparent;
+                color: $DARK_BLUE;
+                font-size: 1em;
+                transition: all 0.2s linear;
+
+                &:hover {
+                    border-bottom: solid 1px $WHITE;
+                    color: $WHITE;
+                }
+            }
+        }
+    }
+}
+
+/* ESTILOS DEL FORO */
+
+.foro__main {
+    height: 100vh;
+
+    .contenedor__foro {
+        min-height: 78vh;
+        @include mixinsfunc.flexBox(center, 0);
+
+        .lado__izquierdo {
+            flex: 2;
+            height: 76vh;
+            padding: 1rem;
+            overflow-y: hidden;
+
+            .contenedor__orden__busqueda {
+                margin-bottom: 1rem;
+                min-height: 20%;
+                border-radius: 10px;
+                @include mixinsfunc.flexBox(space-around, 1rem);
+                background-color: $GRAY;
+                padding: 10px 20px;
+
+                form,
+                .contenedor__select {
+                    @include mixinsfunc.flexBox(center, 10px);
+                    flex-direction: column;
+                    width: 80%;
+
+                    .select_caja {
+                        @include mixinsfunc.flexBox(space-between, 10px);
+                        width: 100%;
+
+                        select {
+                            font-size: 15px;
+                            padding: 3px;
+                            border: solid 1px $DARK_BLUE;
+                            color: $DARK_BLUE;
+                            border-radius: 5px;
+                        }
+
+                        label {
+                            font-size: 15px;
+                            color: $DARK_BLUE;
+                        }
+                    }
+                }
+
+                .btn_principal {
+                    font-size: 13px;
+                }
+            }
+
+            .contenedor__topicos {
+                background-color: $GRAY;
+                height: 72%;
+                border-radius: 10px;
+                overflow-y: scroll;
+
+                .vacio {
+                    width: 100%;
+                    height: 100%;
+                    @include mixinsfunc.flexBox(center, 0);
+                    border: solid 1px;
+                    text-transform: uppercase;
+                    color: $DARK_BLUE;
+                }
+
+                /* Personalización de la barra de desplazamiento */
+                &::-webkit-scrollbar {
+                    width: 5px; /* Ancho de la barra de desplazamiento */
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: $DARK_BLUE; /* Color del pulgar de la barra de desplazamiento */
+                    border-radius: 6px; /* Radio de la esquina del pulgar */
+                }
+
+                &::-webkit-scrollbar-track {
+                    background-color: transparent; /* Color del fondo de la barra de desplazamiento */
+                }
+
+                .topico__tarjeta {
+                    background-color: $GRAY_BLUE;
+                    margin-bottom: 10px;
+                    @include mixinsfunc.flexBox(center, 0);
+                    padding: 8px 20px;
+                    border-radius: 10px;
+
+                    .contenido__izq {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 1rem;
+
+                        a,
+                        h1 {
+                            text-transform: uppercase;
+                            color: $GRAY;
+                            letter-spacing: 1px;
+                            text-overflow: ellipsis;
+                            text-decoration: none;
+                            transition: all 0.2s linear;
+
+                            &:hover {
+                                color: $DARK_BLUE;
+                            }
+                        }
+
+                        .tags_cursos {
+                            display: flex;
+                            gap: 1rem;
+                            align-self: center;
+
+                            span {
+                                font-size: 14px;
+                                border: solid 1px $DARK_BLUE;
+                                padding: 5px 7px 5px 8px;
+                                border-radius: 5px;
+                                background-color: $GRAY;
+                                text-transform: uppercase;
+                                position: relative;
+                            }
+
+                            .tag::after,
+                            .curso::after {
+                                position: absolute;
+                                content: "";
+                                width: 5px;
+                                height: 25px;
+                                border-radius: 5px 0 0 5px;
+                                top: 0;
+                                left: 0;
+                                background-color: red;
+                            }
+
+                            .curso::after {
+                                background-color: green;
+                            }
+                        }
+                    }
+
+                    .contenido__der {
+                        flex: 1;
+                        @include mixinsfunc.flexBox(space-between, 0);
+
+                        .respuestas {
+                            text-transform: uppercase;
+                            color: $GRAY;
+                            font-weight: bolder;
+                            letter-spacing: 1px;
+                            max-width: fit-content;
+                        }
+
+                        figure {
+                            @include mixinsfunc.flexBox(center, 20px);
+
+                            img {
+                                width: 100px;
+                                height: auto;
+                                border: solid 1px $DARK_BLUE;
+                                border-radius: 50%;
+                                background-color: $BLUE;
+                            }
+
+                            figcaption {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 8px;
+                                width: 140px;
+                                color: $WHITE;
+
+                                span {
+                                    border-bottom: solid 1px $DARK_BLUE;
+                                    padding-bottom: 2px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .lado__derecho {
+            flex: 1;
+            height: 76vh;
+            padding: 1rem;
+
+            .mini__aside__banner {
+                min-height: 100%;
+                background-color: $GRAY;
+                border-radius: 10px;
+                @include mixinsfunc.flexBox(center, 1rem);
+                flex-direction: column;
+
+                h1 {
+                    margin-top: 1rem;
+                    text-align: center;
+                    text-transform: uppercase;
+                    color: $DARK_BLUE;
+                }
+
+                .lottie {
+                    width: 90%;
+                }
+            }
+        }
+    }
+}
+
+.creat__topic__cont {
+    height: 100vh;
+
+    .contenedor__crear {
+        min-height: 78vh;
+        @include mixinsfunc.flexBox(center, 0);
+
+        .lado__izq {
+            flex: 2;
+            height: 76vh;
+            padding: 1rem;
+
+            .titular {
+                text-align: start;
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                text-transform: uppercase;
+                font-size: 17px;
+                letter-spacing: 1px;
+                color: $BLUE;
+            }
+
+            .titulo {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 20px;
+
+                input {
+                    width: 50%;
+                    padding: 3px;
+                    border: none;
+                    border-bottom: solid 2px $DARK_BLUE;
+                    background-color: transparent;
+                    outline: none;
+                    font-size: 15px;
+                }
+            }
+
+            .topic_curso {
+                margin-bottom: 15px;
+
+                h2 {
+                    margin-bottom: 10px;
+                }
+                .select_cont {
+                    @include mixinsfunc.flexBox(center, 3rem);
+
+                    select {
+                        width: 130px;
+                        padding: 3px;
+                        background-color: transparent;
+                        border: none;
+                        border-bottom: solid 2px $DARK_BLUE;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .quill {
+                .ql-toolbar,
+                .ql-formats,
+                .ql-picker {
+                    overflow: visible;
+                }
+
+                .ql-container {
+                    height: 150px;
+                }
+            }
+
+            .btn__contenedor {
+                margin-top: 10px;
+                display: flex;
+                gap: 3rem;
+
+                button {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .lado__der {
+            flex: 1;
+            max-height: 100vh;
+            padding: 1rem;
+            overflow-y: hidden;
+
+            aside {
+                min-height: 100%;
+                background-color: $GRAY;
+                border-radius: 10px;
+                @include mixinsfunc.flexBox(center, 0);
+                flex-direction: column;
+
+                h1 {
+                    margin-top: 1.4rem;
+                    text-align: center;
+                    text-transform: uppercase;
+                    color: $DARK_BLUE;
+                }
+
+                .lottie {
+                    width: 90%;
+                }
+            }
+        }
+    }
+}
+
+.topico__main {
+    height: 100vh;
+    padding-bottom: 3rem;
+
+    h1 {
+        color: $DARK_BLUE;
+        font-size: 2.5rem;
+        border-bottom: solid 1px $DARK_BLUE;
+        padding-bottom: 5px;
+    }
+
+    &::-webkit-scrollbar {
+        width: 6px; /* Ancho de la barra de desplazamiento */
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $DARK_BLUE; /* Color del pulgar de la barra de desplazamiento */
+        border-radius: 6px; /* Radio de la esquina del pulgar */
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent; /* Color del fondo de la barra de desplazamiento */
+    }
+
+    .contenido__topico {
+        padding: 1rem 3rem;
+
+        .header__topico {
+            .titulo_fecha {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 20px;
+
+                span {
+                    color: $BLUE;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .tags_cruso {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+
+            span {
+                background-color: $GRAY;
+                color: $DARK_BLUE;
+                border: solid 1px $GRAY_BLUE;
+                padding: 6px 8px;
+                border-radius: 3px;
+                text-transform: capitalize;
+            }
+        }
+
+        .autor__mensaje {
+            display: flex;
+
+            .autor {
+                height: fit-content;
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+
+                img {
+                    border: solid 1px $DARK_BLUE;
+                    background-color: $GRAY_BLUE;
+                    border-radius: 50%;
+                    width: 150px;
+                }
+
+                figcaption {
+                    font-size: 12px;
+                    color: $WHITE;
+                    background-color: $GRAY_BLUE;
+                    padding: 3px 6px;
+                    border-radius: 3px;
+                }
+            }
+
+            .mensaje {
+                flex: 1;
+                min-height: 200px;
+                font-size: 17px;
+                color: $DARK_BLUE;
+                background-color: $GRAY;
+                padding: 10px;
+                border-radius: 10px;
+                text-align: justify;
+                letter-spacing: 1px;
+            }
+        }
+    }
+
+    .titulo_respuestas,
+    .contenedor__respuestas,
+    .form__respuesta__nueva {
+        padding: 0 3rem;
+    }
+
+    .titulo_respuestas {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 1.1rem;
+
+        span {
+            font-size: 20px;
+            color: $BLUE;
+        }
+
+        h2 {
+            color: $DARK_BLUE;
+            font-size: 2rem;
+            text-align: center;
+        }
+    }
+
+    .contenedor__respuestas {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .respuesta {
+            background-color: $GRAY;
+            padding: 10px 15px;
+            border-radius: 10px;
+
+            .autor__mensaje {
+                display: flex;
+
+                .autor {
+                    height: fit-content;
+                    padding: 1rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 10px;
+
+                    img {
+                        border: solid 1px $DARK_BLUE;
+                        background-color: $GRAY_BLUE;
+                        border-radius: 50%;
+                        width: 150px;
+                    }
+
+                    figcaption {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                        font-size: 12px;
+                        color: $WHITE;
+                        background-color: $GRAY_BLUE;
+                        padding: 3px 6px;
+                        border-radius: 3px;
+                    }
+
+                    .check {
+                        @include mixinsfunc.flexBox(center, 5px);
+
+                        label {
+                            font-size: 13px;
+                            color: $DARK_BLUE;
+                        }
+                    }
+                }
+
+                .mensaje {
+                    flex: 1;
+                    min-height: 200px;
+                    font-size: 17px;
+                    color: $DARK_BLUE;
+                    background-color: $GRAY;
+                    padding: 10px;
+                    border-radius: 10px;
+                    text-align: justify;
+                    letter-spacing: 1px;
+                }
+            }
+        }
+    }
+
+    .form__respuesta__nueva {
+        margin-top: 1rem;
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        .quill {
+            .ql-toolbar,
+            .ql-formats,
+            .ql-picker {
+                overflow: visible;
+            }
+
+            .ql-container {
+                height: 200px;
+            }
+        }
+
+        .cont_btn {
+            margin-top: 1rem;
+        }
+    }
+}
